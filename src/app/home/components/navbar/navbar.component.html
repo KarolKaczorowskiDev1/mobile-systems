@@ -1,0 +1,76 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="justify-content-between">
+    <div>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div class="d-flex gap-3">
+      <button mat-icon-button routerLink="/cart" *ngIf="!(userDataProvider.isAdmin$ | async)">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+      <ng-container
+        *ngIf="userDataProvider.isLoggedIn$ | async; else loginTemplate"
+      >
+        <button mat-icon-button routerLink="/settings">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button (click)="signOut()">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </ng-container>
+      <ng-template #loginTemplate>
+        <button mat-button routerLink="/auth/sign-in">Sign in</button>
+      </ng-template>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    [fixedTopGap]="64"
+    [fixedInViewport]="true"
+    [fixedBottomGap]="0"
+  >
+    <mat-sidenav-content class="ms-0 p-5" *ngIf="queryParams$ | async as queryParams">
+        <h2>Category</h2>
+        <mat-selection-list #categoriesList [multiple]="false">
+          <mat-list-option
+            [value]="undefined"
+            [selected]="!queryParams['category']"
+            (click)="applyFilters(queryParams, { category: undefined })"
+          >
+            All categories
+          </mat-list-option>
+          <mat-list-option
+            *ngFor="let category of categories"
+            [value]="category"
+            [selected]="(queryParams['category'] | lowercase) === (category | lowercase)"
+            (click)="applyFilters(queryParams, { category: category })"
+          >
+            {{ category | titlecase }}
+          </mat-list-option>
+        </mat-selection-list>
+        <h2>Destination</h2>
+        <mat-selection-list #categoriesList [multiple]="false">
+          <mat-list-option
+            [value]="undefined"
+            [selected]="!queryParams['gender']"
+            (selectedChange)="applyFilters(queryParams, { gender: undefined })"
+          >
+            All genders
+          </mat-list-option>
+          <mat-list-option
+            *ngFor="let destination of destinations"
+            [value]="destination"
+            [selected]="(queryParams['gender'] | lowercase) === (destination | lowercase)"
+            (selectedChange)="applyFilters(queryParams, { gender: destination })"
+          >
+            {{ destination | titlecase }}
+          </mat-list-option>
+        </mat-selection-list>
+    </mat-sidenav-content>
+  </mat-sidenav>
+</mat-sidenav-container>

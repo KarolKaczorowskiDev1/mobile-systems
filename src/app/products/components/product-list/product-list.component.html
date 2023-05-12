@@ -1,0 +1,26 @@
+<cdk-virtual-scroll-viewport
+  appendOnly
+  itemSize="20"
+  class="scroll-wrapper container-fluid"
+>
+  <div class="row">
+    <div
+      class="col-12 col-md-6 col-lg-4 position-relative gx-5 gy-3"
+      *cdkVirtualFor="let product of products$ | async"
+    >
+      <app-product [product]="product">
+        <button (click)="addProductToCart(product)" mat-icon-button color="primary" *ngIf="!(userDataProvider.isAdmin$ | async)">
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+        <ng-container *ngIf="userDataProvider.isAdmin$ | async">
+          <button mat-icon-button color="primary" [routerLink]="'/products/' + product.id + '/edit'">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="primary" (click)="deleteProduct(product.id)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </ng-container>
+      </app-product>
+    </div>
+  </div>
+</cdk-virtual-scroll-viewport>

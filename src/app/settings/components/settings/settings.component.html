@@ -1,0 +1,22 @@
+<div class="container pt-5">
+  <div class="row">
+    <div class="col">
+      <h2>Settings</h2>
+    </div>
+  </div>
+  <mat-list>
+    <div mat-subheader>User settings</div>
+    <mat-list-item routerLink="/settings/user-details">
+      <mat-icon matListItemIcon>edit</mat-icon>
+      <div matListItemTitle>Edit profile</div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <ng-container *ngIf="userDataProvider.isAdmin$ | async">
+      <div mat-subheader>Product settings</div>
+      <mat-list-item routerLink="/products/new">
+        <mat-icon matListItemIcon>exposure_plus_1</mat-icon>
+        <div matListItemTitle>Add product</div>
+      </mat-list-item>
+    </ng-container>
+  </mat-list>
+</div>

@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>Take a picture!</h1>
+<div mat-dialog-content>
+  <ng-container *ngIf="!capturedImage">
+    <webcam
+      [height]="500"
+      [width]="500"
+      [trigger]="triggerCapture$"
+      (imageCapture)="onImageCapture($event)"
+      [allowCameraSwitch]="multipleCamsAvailable"
+      [switchCamera]="triggerCameraSwitch$"
+      [videoOptions]="videoOptions"
+      (initError)="onError($event)"
+    ></webcam>
+  </ng-container>
+  <ng-container *ngIf="capturedImage">
+    <img [src]="'data:image/png;base64, ' + capturedImage.imageAsBase64" />
+  </ng-container>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+  <ng-container *ngIf="!capturedImage">
+    <button *ngIf="multipleCamsAvailable" mat-button color="primary" (click)="switchCamera()">
+      Switch camera
+    </button>
+    <button mat-button color="primary" (click)="captureImage()">
+      Take a picture
+    </button>
+  </ng-container>
+  <ng-container *ngIf="capturedImage">
+    <button mat-button color="secondary" (click)="discardCapturedImage()">
+      Take another picture
+    </button>
+    <button
+      mat-button
+      color="primary"
+      [mat-dialog-close]="capturedImage"
+    >
+      Save picture
+    </button>
+  </ng-container>
+</div>

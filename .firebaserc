@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "mobile-systems-2697b": {
+      "hosting": {
+        "mobile-systems": [
+          "mobile-systems-2697b"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "mobile-systems-2697b"
+  }
+}

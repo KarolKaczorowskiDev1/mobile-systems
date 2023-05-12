@@ -1,0 +1,73 @@
+<div class="container pt-5" *ngIf="queryParamsData$ | async as queryParamsData">
+  <div class="row">
+    <div class="col">
+      <h2>{{ queryParamsData.product ? "Edit product" : "Create a new product" }}</h2>
+    </div>
+  </div>
+  <form [formGroup]="form" class="container mb-3" (ngSubmit)="saveProduct(queryParamsData.product)">
+    <div class="row">
+      <div class="col-12 col-md-10 col-lg-8">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" type="text" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-10 col-lg-8">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category">
+            <mat-option
+              *ngFor="let category of categories"
+              [value]="category"
+              >{{ category | titlecase }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-10 col-lg-8">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Destination</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option
+              *ngFor="let destination of destinations"
+              [value]="destination"
+              >{{ destination | titlecase }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-10 col-lg-8">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price" type="number" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-10 col-lg-8">
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label>Image URL</mat-label>
+          <input matInput formControlName="photoUrl" type="text" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="!form.valid"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

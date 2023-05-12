@@ -1,0 +1,33 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ product.name | titlecase }}</mat-card-title>
+      <mat-card-subtitle>{{ product.price | currency }}</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      class="w-100"
+      [src]="product.photoUrl"
+      [alt]="product.category"
+    />
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <span matListItemTitle>Category</span>
+          <span>{{ product.category | titlecase }}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matListItemTitle>Destination</span>
+          <span>{{ product.gender | titlecase }}</span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matListItemTitle>Available sizes</span>
+          <span *ngFor="let size of product.availableSizes; let isLast = last">
+            {{ size + (isLast ? '' : ', ') }}
+          </span>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <ng-content></ng-content>
+    </mat-card-actions>
+  </mat-card>
