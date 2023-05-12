@@ -15,12 +15,12 @@ export class AuthGuard implements CanLoad {
     return combineLatest([
       this.userDataProvider.isLoggedIn$.pipe(skip(1)),
     ]).pipe(
-      map((isLoggedIn) => {
+      map(([isLoggedIn]) => {
         if (isLoggedIn) {
           return true;
         }
 
-        return this.router.createUrlTree(['/products']);
+        return this.router.createUrlTree(['/auth/sign-in']);
       })
     );
   }

@@ -17,17 +17,16 @@ import { Size } from '../../model/enums/size';
 })
 export class ProductListComponent {
 
-  products$: Observable<Product[]> = of([]);
-  // products$ = this.route.queryParams.pipe(
-  //   switchMap(params => {
-  //     const { category, gender } = params;
+  products$ = this.route.queryParams.pipe(
+    switchMap(params => {
+      const { category, gender } = params;
 
-  //     return this.productService.getProductsList({
-  //       category: category?.toUpperCase(),
-  //       gender: gender?.toUpperCase(),
-  //     })
-  //   })
-  // )
+      return this.productService.getProductsList({
+        category: category?.toUpperCase(),
+        gender: gender?.toUpperCase(),
+      })
+    })
+  )
   
   constructor(
     private productService: ProductService, 

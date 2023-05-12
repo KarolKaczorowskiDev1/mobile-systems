@@ -9,7 +9,6 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canLoad: [AuthGuard],
     children: [
       {
         path: 'products',
@@ -42,47 +41,3 @@ const routes: Routes = [
   exports: [RouterModule],
 })
 export class HomeRoutingModule { }
-
-// providers: [
-//   {
-//     provide: ROUTES,
-//     deps: [UserDataProviderService],
-//     multi: true,
-//     useFactory: (userDataProvider: UserDataProviderService) => {
-//       return configureHomeRoutes(userDataProvider);
-//     }
-//   }
-// ]
-
-// function configureHomeRoutes(userDataProvider: UserDataProviderService): Routes {
-  // const userInfo = userDataProvider.getUserInfo();
-
-  // if (userInfo) {
-    // if (userInfo.role === Role.ADMIN) {
-      // return [
-        // {
-          // path: '',
-          // component: HomeComponent,
-          // loadChildren: () => import('src/app/admin/admin.module').then(m => m.AdminModule),
-        // }
-      // ]
-    // }
-    
-    // return [
-      // {
-        // path: '',
-        // component: HomeComponent,
-        // children: [
-          // {
-            // path: '',
-            // loadChildren: () => import('src/app/client/client.module').then(m => m.ClientModule),
-            // canLoad: [AuthGuard],
-          // }
-        // ]
-        // loadChildren: () => import('src/app/client/client.module').then(m => m.ClientModule),
-      // }
-    // ]
-  // }
-
-  // return [];
-// }

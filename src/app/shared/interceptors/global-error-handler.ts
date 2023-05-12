@@ -1,18 +1,18 @@
-import { ErrorHandler } from '@angular/core';
+import { ErrorHandler, Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { FirebaseError } from 'firebase/app';
 
+@Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
   private readonly errorCodesToDisplay: string[] = [];
 
+  constructor(private snackBar: MatSnackBar) {}
+  
   handleError(error: Error): void {
-    if (error instanceof FirebaseError && this.shouldDisplayFirebaseError(error)) {
-      if (this.shouldDisplayFirebaseError(error)) {
-        // TODO: display modal or something
-        console.error(error.message);
-      }
+    if (error instanceof FirebaseError) {;
+        this.snackBar.open(error.message, 'Try again', { duration: 2000, verticalPosition: 'top', horizontalPosition: 'center' })
     } else {
-      // TODO: display modal or something
-      console.error(error);
+      this.snackBar.open('An unexpected error occured!', 'Try again', { duration: 2000, verticalPosition: 'top', horizontalPosition: 'center' });
     }
   }
 
