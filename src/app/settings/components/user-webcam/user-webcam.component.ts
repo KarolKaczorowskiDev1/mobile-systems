@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Subject } from 'rxjs';
-import { SnackBarService } from 'src/app/shared/services/snack-bar.service';
 
 @Component({
   selector: 'app-user-webcam',
@@ -23,7 +23,7 @@ export class UserWebcamComponent implements OnInit {
     facingMode: { ideal: 'user', },
   };
 
-  constructor(private snackBarService: SnackBarService, private cdr: ChangeDetectorRef) {}
+  constructor(private snackBar: MatSnackBar, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     WebcamUtil.getAvailableVideoInputs()
@@ -51,6 +51,6 @@ export class UserWebcamComponent implements OnInit {
   }
 
   onError(error: WebcamInitError): void {
-    this.snackBarService.show(error.message, 'Got it!');
+    this.snackBar.open(error.message, 'Ok', { duration: 2000 });
   }
 }

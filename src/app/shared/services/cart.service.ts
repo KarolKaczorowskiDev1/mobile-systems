@@ -3,7 +3,7 @@ import { BehaviorSubject, map } from 'rxjs';
 import { Product } from 'src/app/products/model/product';
 import { CartProduct } from '../model/cart-product';
 import { Size } from 'src/app/products/model/enums/size';
-import { SnackBarService } from './snack-bar.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class CartService {
     map(products => products.reduce((acc, curr) => acc + (curr.price * curr.amount), 0)),
   )
 
-  constructor(private snackBarService: SnackBarService) { }
+  constructor(private snackBar: MatSnackBar) { }
 
   add(newProduct: Product, size: Size): void {
     const products = [...this.products.getValue()];
@@ -29,7 +29,7 @@ export class CartService {
       products.push(new CartProduct(newProduct, size));
     }
 
-    this.snackBarService.show('Succesfuly added product to cart!', 'Got it!');
+    this.snackBar.open('Succesfuly added product to cart!', 'Got it!', { duration: 2000, });
 
     this.products.next(products);
   }
@@ -46,7 +46,7 @@ export class CartService {
       }
     }
 
-    this.snackBarService.show('Succesfuly removed product from cart!', 'Got it!');
+    this.snackBar.open('Succesfuly removed product from cart!', 'Got it!', { duration: 2000, });
    
     this.products.next(products);
   }

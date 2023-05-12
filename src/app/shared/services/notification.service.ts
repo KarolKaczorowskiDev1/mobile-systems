@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
-import { Observable, combineLatest, filter, map, of, switchMap } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { UserDataProviderService } from './user-data-provider.service';
 import { MessagingNotification } from '../model/messaging-notification';
 
@@ -14,15 +14,14 @@ export class NotificationService {
     this.userDataProvider.isAdmin$,
     this.messaging.requestPermission,
     this.messaging.getToken,
+    this.messaging.messages,
   ]).pipe(
-    switchMap(([isLoggedIn, isAdmin,  requestPermission, token]) => {
-      if (isLoggedIn && !isAdmin && requestPermission === 'granted' && token) {
-        return this.messaging.messages.pipe(
-          map(({ notification }) => ({ title: notification?.title, image: notification?.image, body: notification?.body })),
-        )
+    map(([isLoggedIn, isAdmin, requestPermission, token, { notification }]) => {
+      if (isLoggedIn && !isAdmin && requestPermission === 'granted' && token && notification) {
+        return { title: notification?.title, image: notification?.image, body: notification?.body }
       }
 
-      return of(null);
+      return null;
     })
   )
 

@@ -20,7 +20,6 @@ export class ProductService extends FirestoreService<Product> {
     let productQuery = this.collection.ref.orderBy('name');
 
     if (params.category) {
-      console.log(params.category);
       productQuery = productQuery.where(
         'category',
         '==',

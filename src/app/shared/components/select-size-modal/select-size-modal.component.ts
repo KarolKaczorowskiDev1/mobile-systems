@@ -20,7 +20,5 @@ export class SelectSizeModalComponent {
 
   selectedSize?: Size;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public product: Product, private dialogRef: DialogRef<Size>) {
-    console.log(this.product);
-  }
+  constructor(@Inject(MAT_DIALOG_DATA) public product: Product, private dialogRef: DialogRef<Size>) {}
 }
